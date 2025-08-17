@@ -82,17 +82,7 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    /* Konten utama */
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 2em;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-shadow: 0 0 15px #00faff;
-      position: relative;
-      z-index: 2;
-    }
+    
 
     .container {
       display: grid;
@@ -233,6 +223,17 @@
       let text = `Halo admin, saya mau order: ${item}`;
       window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, "_blank");
     }
+    function startSite() {
+    // sembunyiin intro
+    document.getElementById("intro").style.display = "none";
+    // munculin store
+    document.getElementById("store").classList.add("show");
+    // play musik
+    document.getElementById("bgmusic").play();
+  }
   </script>
+  <audio id="bgmusic" loop>
+  <source src="sound.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
