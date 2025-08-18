@@ -1,286 +1,191 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BRAJA STORE</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      overflow-x: hidden;
-      background: #0b1020;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRAJA STORE</title>
+<style>
+  body {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    background: #0b1020;
+  }
+  .bg {
+    position: fixed; top:0; left:0; width:200%; height:200%;
+    background: url('braja.png') repeat; background-size:250px;
+    animation: movePattern 40s linear infinite;
+    filter: drop-shadow(0 0 15px #00faff); z-index:0;
+  }
+  @keyframes movePattern {
+    0% {transform: translate(0,0) scale(1);}
+    50% {transform: translate(-200px,-200px) scale(1.05);}
+    100% {transform: translate(0,0) scale(1);}
+  }
+  .intro {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.9); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; z-index:5;
+  }
+  .intro h1 { font-size:2em; margin-bottom:20px; text-shadow:0 0 15px #00faff; }
+  .intro button { padding:12px 22px; font-size:1.1em; font-weight:bold;
+    background: linear-gradient(90deg,#00ffae,#00faff); border:none; border-radius:10px;
+    cursor:pointer; color:#000; box-shadow:0 0 12px rgba(0,0,0,0.6);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .intro button:hover { transform: scale(1.08); box-shadow: 0 0 20px #00faff; }
 
-    /* Background */
-    .bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 200%; height: 200%;
-      background: url('braja.png') repeat;
-      background-size: 250px;
-      animation: movePattern 40s linear infinite;
-      filter: drop-shadow(0 0 15px #00faff);
-      z-index: 0;
-    }
+  /* navbar */
+  .nav {
+    display: flex;
+    justify-content: space-between; /* brand kiri, menu kanan */
+    align-items: center;
+    padding: 10px 20px;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand .logo {
+    height: 40px;
+  }
+  .menu button {
+    margin-left: 10px;
+    padding: 10px 16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#00ffae;
+    color:#000;
+    font-weight:bold;
+    transition:0.3s;
+  }
+  .menu button:hover { background:#00cc88; }
 
-    @keyframes movePattern {
-      0% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(-200px,-200px) scale(1.05); }
-      100% { transform: translate(0,0) scale(1); }
-    }
+  .container {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px; padding:30px; position:relative; z-index:2;
+    opacity:0; transform: translateY(50px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .container.show { opacity:1; transform: translateY(0); }
 
-    /* Intro */
-    .intro {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      z-index: 5;
-    }
-
-    .intro h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      text-shadow: 0 0 15px #00faff;
-    }
-
-    .intro button {
-      padding: 12px 22px;
-      font-size: 1.1em;
-      font-weight: bold;
-      background: linear-gradient(90deg,#00ffae,#00faff);
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      color: #000;
-      box-shadow: 0 0 12px rgba(0,0,0,0.6);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .intro button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 20px #00faff;
-    }
-
-    /* Navigation */
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
-      z-index: 2;
-      position: relative;
-    }
-
-    .nav button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #00ffae;
-      color: #000;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .nav button:hover {
-      background: #00cc88;
-    }
-
-    /* Container */
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-      gap: 20px;
-      padding: 30px;
-      position: relative;
-      z-index: 2;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .container.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Card */
-    .card {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: 3px solid transparent;
-      background-clip: padding-box;
-      position: relative;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: -3px; left: -3px; right: -3px; bottom: -3px;
-      border-radius: 15px;
-      background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
-      background-size: 400% 400%;
-      animation: rgbBorder 8s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes rgbBorder {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.8);
-    }
-
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 1.3em;
-      color: #00ffae;
-    }
-
-    .price {
-      font-size: 1.2em;
-      margin-bottom: 15px;
-      color: #FFD700;
-      font-weight: bold;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 18px;
-      background: #00ffae;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #000;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #00cc88;
-    }
-
-    .hidden { display: none; }
-
-    /* Testimoni */
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    li img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-  </style>
+  .card {
+    background: rgba(0,0,0,0.6); padding:20px; border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border:3px solid transparent; background-clip: padding-box; position: relative;
+  }
+  .card::before {
+    content:''; position:absolute; top:-3px; left:-3px; right:-3px; bottom:-3px;
+    border-radius:15px;
+    background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
+    background-size:400% 400%; animation: rgbBorder 8s linear infinite;
+    z-index:-1;
+  }
+  @keyframes rgbBorder {
+    0% { background-position:0% 50%; }
+    50% { background-position:100% 50%; }
+    100% { background-position:0% 50%; }
+  }
+  .card:hover { transform: translateY(-8px); box-shadow:0 8px 18px rgba(0,0,0,0.8); }
+  .card h2 { margin:0 0 10px; font-size:1.3em; color:#00ffae; }
+  .price { font-size:1.2em; margin-bottom:15px; color:#FFD700; font-weight:bold; }
+  .btn { display:inline-block; padding:10px 18px; background:#00ffae; border:none;
+    border-radius:8px; cursor:pointer; font-weight:bold; color:#000;
+    text-decoration:none; transition:0.3s;
+  }
+  .btn:hover { background:#00cc88; }
+  .hidden { display:none; }
+  ul { list-style:none; padding:0; }
+  li { margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  li img { width:50px; height:50px; border-radius:50%; object-fit:cover; }
+</style>
 </head>
-
 <body>
-  <div class="bg"></div>
+<div class="bg"></div>
 
-  <!-- Intro -->
-  <div class="intro" id="intro">
-    <h1>SELAMAT DATANG DI BRAJA STORE</h1>
-    <p>Pencet tombol di bawah untuk melihat penawaran kami</p>
-    <button onclick="startSite()">Lanjut</button>
+<div class="intro" id="intro">
+  <h1>SELAMAT DATANG DI BRAJA STORE</h1>
+  <p>Pencet tombol di bawah untuk melihat penawaran kami</p>
+  <button onclick="startSite()">Lanjut</button>
+</div>
+
+<div class="nav" id="navButtons" style="display:none;">
+  <div class="brand">
+    <img src="braja.png" alt="Braja" class="logo">
+    <strong>Braja STORE</strong>
   </div>
-
-  <!-- Nav -->
-  <div class="nav" id="navButtons" style="display:none;">
+  <div class="menu">
     <button onclick="showSection('store')">Barang</button>
     <button onclick="showSection('testi')">Testimoni</button>
   </div>
+</div>
 
-  <!-- Store -->
-  <div class="container" id="store">
-    <div class="card">
-      <h2>Jasa Sewa Private Server SAB</h2>
-      <p class="price">Rp 5.000 / Hari</p>
-      <a href="#" class="btn" onclick="order('Jasa Sewa Private Server SAB - 5K/Hari')">Order Sekarang</a>
-    </div>
-    <div class="card">
-      <h2>ANOMALI: TRALALEO TRALALA (NORMAL)</h2>
-      <p class="price">SOLD</p>
-      <a href="#" class="btn" onclick="order('TRALALEO TRALALA - 500P')">Order Sekarang</a>
-    </div>
-    <div class="card">
-      <h2>ANOMALI: ORCALELO ORCALALA (LAVA)</h2>
-      <p class="price">Rp 5.000</p>
-      <a href="#" class="btn" onclick="order('ORCALELO ORCALALA - 5K')">Order Sekarang</a>
-    </div>
-    <div class="card">
-      <h2>ANOMALI: ODIN DIN DIN DUN (NORMAL)</h2>
-      <p class="price">Rp 1.000</p>
-      <a href="#" class="btn" onclick="order('ODIN DIN DIN DUN - 1K')">Order Sekarang</a>
-    </div>
+<div class="container" id="store">
+  <div class="card">
+    <h2>Jasa Sewa Private Server SAB</h2>
+    <p class="price">Rp 5.000 / Hari</p>
+    <a href="#" class="btn" onclick="order('Jasa Sewa Private Server SAB - 5K/Hari')">Order Sekarang</a>
   </div>
-
-  <!-- Testimoni -->
-  <div class="container hidden" id="testi">
-    <div class="card">
-      <h2>Testimoni Pelanggan</h2>
-      <ul>
-        <li><img src="testi1.jpg" alt="Testi1"> "Server cepat dan stabil!" - @User1</li>
-        <li><img src="https://i.pravatar.cc/50?img=2" alt="User2"> "Harga murah tapi kualitas top!" - @User2</li>
-        <li><img src="https://i.pravatar.cc/50?img=3" alt="User3"> "Admin cepat tanggap dan ramah" - @User3</li>
-      </ul>
-    </div>
+  <div class="card">
+    <h2>ANOMALI: TRALALEO TRALALA (NORMAL)</h2>
+    <p class="price">Sold</p>
+    <a href="#" class="btn" onclick="order('TRALALEO TRALALA - 500P')">Order Sekarang</a>
   </div>
+  <div class="card">
+    <h2>ANOMALI: ORCALELO ORCALALA (LAVA)</h2>
+    <p class="price">Rp 5.000</p>
+    <a href="#" class="btn" onclick="order('ORCALELO ORCALALA - 5K')">Order Sekarang</a>
+  </div>
+  <div class="card">
+    <h2>ANOMALI: ODIN DIN DIN DUN (NORMAL)</h2>
+    <p class="price">Rp 1.000</p>
+    <a href="#" class="btn" onclick="order('ODIN DIN DIN DUN - 1K')">Order Sekarang</a>
+  </div>
+</div>
 
-  <!-- Script -->
-  <script>
-    function startSite(){
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('store').classList.add('show');
-      document.getElementById('navButtons').style.display = 'flex';
-      document.getElementById('bgmusic')?.play();
-    }
+<div class="container hidden" id="testi">
+  <div class="card">
+    <h2>Testimoni Pelanggan</h2>
+    <ul>
+      <li><img src="testi1.jpg" alt="Testi1"> "Server cepat dan stabil!" - @User1</li>
+      <li><img src="https://i.pravatar.cc/50?img=2" alt="User2"> "Harga murah tapi kualitas top!" - @User2</li>
+      <li><img src="https://i.pravatar.cc/50?img=3" alt="User3"> "Admin cepat tanggap dan ramah" - @User3</li>
+    </ul>
+  </div>
+</div>
 
-    function order(item){
-      let wa = '6285184480901';
-      let text = `Halo admin, saya mau order: ${item}`;
-      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
-    }
+<script>
+function startSite(){
+  document.getElementById('intro').style.display='none';
+  document.getElementById('store').classList.add('show');
+  document.getElementById('navButtons').style.display='flex';
+  document.getElementById('bgmusic')?.play();
+}
+function order(item){
+  let wa='6285184480901';
+  let text=`Halo admin, saya mau order: ${item}`;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
+}
+function showSection(id){
+  if(id==='store'){
+    document.getElementById('store').classList.add('show');
+    document.getElementById('testi').classList.add('hidden');
+  } else {
+    document.getElementById('store').classList.remove('show');
+    document.getElementById('testi').classList.remove('hidden');
+  }
+}
+</script>
 
-    function showSection(id){
-      if(id === 'store'){
-        document.getElementById('store').classList.add('show');
-        document.getElementById('testi').classList.add('hidden');
-      } else {
-        document.getElementById('store').classList.remove('show');
-        document.getElementById('testi').classList.remove('hidden');
-      }
-    }
-  </script>
-
-  <!-- Background Music -->
-  <audio id="bgmusic" loop>
-    <source src="sound.mp3" type="audio/mpeg">
-  </audio>
+<audio id="bgmusic" loop>
+  <source src="sound.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
