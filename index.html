@@ -67,13 +67,18 @@
   }
   .menu button:hover { background:#00cc88; }
 
+  /* Container + animasi */
   .container {
     display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px; padding:30px; position:relative; z-index:2;
-    opacity:0; transform: translateY(50px);
-    transition: opacity 1s ease, transform 1s ease;
+    opacity:0; transform: translateY(60px);
+    pointer-events:none;
+    transition: opacity 0.8s ease, transform 0.8s ease;
   }
-  .container.show { opacity:1; transform: translateY(0); }
+  .container.show {
+    opacity:1; transform: translateY(0);
+    pointer-events:auto;
+  }
   .hidden { display:none; }
 
   .card {
@@ -215,8 +220,7 @@
 <script>
 function startSite(){
   document.getElementById('intro').style.display='none';
-  document.getElementById('store').classList.remove('hidden');
-  document.getElementById('store').classList.add('show');
+  showSection('store');
   document.getElementById('navButtons').style.display='flex';
   document.getElementById('bgmusic')?.play();
 }
@@ -228,13 +232,14 @@ function order(item){
 function showSection(id){
   // sembunyikan semua
   ['store','gag','testi'].forEach(sec=>{
-    document.getElementById(sec).classList.remove('show');
-    document.getElementById(sec).classList.add('hidden');
+    const el = document.getElementById(sec);
+    el.classList.remove('show');
+    el.classList.add('hidden');
   });
-  // tampilkan section dipilih
+  // tampilkan section dipilih dengan animasi
   const section = document.getElementById(id);
   section.classList.remove('hidden');
-  section.classList.add('show');
+  setTimeout(()=> section.classList.add('show'), 50);
 }
 </script>
 
@@ -242,4 +247,4 @@ function showSection(id){
   <source src="sound.mp3" type="audio/mpeg">
 </audio>
 </body>
-      </html>
+</html>
